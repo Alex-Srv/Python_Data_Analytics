@@ -137,3 +137,55 @@ plt.show()
 * **Niche and specialized technologies command the highest salary premiums:** Specialized skills such as Debian, RingCentral, Mongo, Lua, and Hugging Face dominate top earnings, yielding median salaries between $150K and $200K. These high compensation levels reflect talent scarcity at the intersection of analytics, systems engineering, blockchain (Solidity), and modern machine learning.
 * **Core analytical skills ensure broad demand but hit an earlier compensation ceiling:** Foundational tools like Excel, SAS, Tableau, and SQL sit at the lower end of the top-paying in-demand spectrum, centering around a $100K–$120K median salary. While essential for breaking into data analytics, relying solely on them leads to a compensation plateau.
 * **Big Data and Cloud platforms offer the optimal balance of market demand and high pay:** Widely requested technologies such as Spark, AWS, Java, Python, and Azure achieve the sweet spot, driving median salaries up to the $125K–$140K bracket. Mastering distributed data processing and cloud infrastructure represents the most direct pathway to maximizing earnings without pivoting to rare micro-niches.
+
+# The Analysis 
+
+## 4. What are the most optimal skill to learn for Data Analyst in US? 
+
+View my notebook with detailed steps here: [5_Optimal_Skills.ipynb](/3_Project/5_Optimal_Skills.ipynb)
+
+```python
+from adjustText import adjust_text
+
+
+#df_DA_skills_high_demand.plot(kind='scatter', x='skills_percent',y='median_salary')
+sns.set_theme(style='ticks')
+sns.scatterplot(
+    data=df_plot,
+    x='skills_percent',
+    y='median_salary',
+    hue='technology'
+)
+texts= []
+plt.xlabel('Likelihood in Job Finding')
+plt.ylabel('Median Salary')
+plt.title(f'Optimal Skills for Data Analyst in the US')
+for i, txt in enumerate(df_DA_skills_high_demand.index):
+    texts.append(plt.text(
+        df_DA_skills_high_demand['skills_percent'].iloc[i],          
+        df_DA_skills_high_demand['median_salary'].iloc[i] + 500,  
+        txt,                              
+        ha='right',                     
+        fontsize=9)
+    )
+sns.despine()
+
+
+adjust_text(texts, arrowprops=dict(arrowstyle="->",color ="g",lw=1.5))
+
+ax=plt.gca()
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, pos:f'${int(y/1000)}K'))
+ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, pos:f'{int(x)}%'))
+
+plt.ylim(75000, 100000)
+plt.tight_layout()
+```
+
+## Results
+![Visualization of Most Oprimal Skills for Data Analyst in the US](/3_Project/images/Optimal_skills.png)
+
+### Insights
+
+* **High-Probability Foundational Skills (Fastest Path to Employment):** For candidates aiming to secure their first data analytics role, **SQL** is the single most vital skill, appearing in nearly 58% of job postings with a solid median compensation of approximately $91K. Combined with **Excel** (over 40% likelihood, ~$84K median) and visualization tools like **Tableau** (~31% likelihood, ~$93K median), this foundational cluster delivers the highest probability of landing a job.
+* **High-Earning Value Skills (Higher Salary, Moderate-to-Low Market Demand):** **Python** offers the strongest return on investment, leading top-tier compensation at around $97K median salary while maintaining a robust ~33% market presence. More specialized technologies such as **Oracle** also reach the peak salary tier (~$97K), but with a much lower hiring frequency (<5% likelihood), representing high-reward but niche specialization opportunities.
+* **Deprioritized Skills (Low Demand and Low Compensation):** General office software like **PowerPoint** and **Word** should not be prioritized during skill development. Both demonstrate minimal presence in technical requirements (~6% likelihood) and sit at the bottom of the compensation curve ($81K–$85K), indicating that basic tooling adds little competitive edge in the data analytics job market.
