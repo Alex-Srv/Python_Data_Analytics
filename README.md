@@ -1,4 +1,4 @@
-# 
+# Introduction
 # Project Overview
 
 Welcome to the Data Profession Market Analysis project! This repository provides an in-depth exploration of the job market for data professionals, focusing on the most in-demand skills, salary distributions, and technology trends across both the Russian and US job markets. 
